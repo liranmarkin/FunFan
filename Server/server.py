@@ -1,6 +1,8 @@
 import SocketServer
 import RPi.GPIO as GPIO
 import cv2
+import os
+import thread
 
 
 class Servo():
@@ -30,15 +32,17 @@ class Camera():
     pic_height = None
     FOV = 75
     camera = None
-    img_url = ""
+    img_url = "./img.png"
+    img1_url = "./img1.png"
+
+    def take_picture(self):
+        retval, im = self.camera.read()
+        cv2.imwrite(self.img1_url, im)
+        os.remove(self.img_url)
+        os.rename(self.img1_url, self.img_url)
 
     def get_image(self):
-        # read is the easiest way to get a full image out of a VideoCapture object.
-        retval, im = self.camera.read()
-        return im
-
-    def save_image(self):
-
+        return cv2.imread(self.img_url, 0)
 
     def __init__(self):
         self.camera = cv2.VideoCapture(self.camera_port)
@@ -50,11 +54,11 @@ class Camera():
 
 
 
+def shoot(camera):
+    while True:
+        camera.take_picture()
 
-
-
-
-
+camera = None
 
 class MyTCPHandler(SocketServer.BaseRequestHandler):
     """
@@ -75,6 +79,9 @@ class MyTCPHandler(SocketServer.BaseRequestHandler):
 
 if __name__ == "__main__":
     HOST, PORT = "localhost", 9999
+
+    camera = Camera()
+    thread.start_new_thread(shoot, (camera))
 
     # Create the server, binding to localhost on port 9999
     server = SocketServer.TCPServer((HOST, PORT), MyTCPHandler)
