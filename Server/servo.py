@@ -1,6 +1,5 @@
 import RPi.GPIO as GPIO
 import time
-import random
 pin = 12
 NEUTRAL = 7.5
 ZERO = 2.5
