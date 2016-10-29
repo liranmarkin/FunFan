@@ -3,6 +3,7 @@ import RPi.GPIO as GPIO
 import cv2
 import os
 import thread
+import json
 
 
 class Servo():
@@ -43,7 +44,7 @@ class Camera():
         os.rename(self.img1_url, self.img_url)
 
     def get_image(self):
-        return cv2.imread(self.img_url, 0)
+        return [].append(cv2.imread(self.img_url, 0))
 
     def __init__(self, camera_port):
         self.camera_port = camera_port
@@ -52,7 +53,7 @@ class Camera():
         self.pic_height = self.camera.get(4)
 
     def get_camera_params(self):
-        return self.pic_width, self.pic_height, self.FOV
+        return [self.pic_width, self.pic_height, self.FOV]
 
 
 
@@ -79,9 +80,9 @@ class MyTCPHandler(SocketServer.BaseRequestHandler):
         print "{} wrote:".format(self.client_address[0])
         print self.data
         if self.data == "getImg":
-            self.request.sendall(camera.get_image())
+            self.request.sendall(json.dump(camera.get_image()))
         elif self.data == "getParms":
-            self.request.sendall(camera.get_camera_params())
+            self.request.sendall(json.dump(camera.get_camera_params()))
         else:
             try:
                 deg = float(self.data)
@@ -92,6 +93,7 @@ class MyTCPHandler(SocketServer.BaseRequestHandler):
                 self.request.sendall("Success")
             except:
                 self.request.sendall("Error")
+
 
 def start_server(HOST, PORT):
 
