@@ -29,7 +29,7 @@ class Servo():
         self.servo.ChangeDutyCycle(self.toDutyCycle(deg))
 
 class Camera():
-    camera_port = 0
+    camera_port = None
     pic_width = None
     pic_height = None
     FOV = 75
@@ -54,8 +54,8 @@ class Camera():
         self.camera = cv2.VideoCapture(self.camera_port)
         self.pic_width = self.camera.get(3)
         self.pic_height = self.camera.get(4)
-        print self.camera.get(3)
-        print self.camera.get(4)
+        if not self.camera.isOpened():
+            print "Error starting camera"
 
 
     def get_camera_params(self):
@@ -116,7 +116,7 @@ if __name__ == "__main__":
     HOST, PORT = "localhost", 9999
 
     #start camera on channel 1
-    camera = Camera(1)
+    camera = Camera(-1)
     thread.start_new_thread(shoot, (camera, ))
 
     #start servo on pin 12
