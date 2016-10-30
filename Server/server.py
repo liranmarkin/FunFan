@@ -83,9 +83,9 @@ class MyTCPHandler(SocketServer.BaseRequestHandler):
         print "{} wrote:".format(self.client_address[0])
         print self.data
         if self.data == "getImg":
-            self.request.sendall(json.dump(camera.get_image()))
+            self.request.sendall(json.dumps(camera.get_image()))
         elif self.data == "getParms":
-            self.request.sendall(json.dump(camera.get_camera_params()))
+            self.request.sendall(json.dumps(camera.get_camera_params()))
         else:
             try:
                 deg = float(self.data)

@@ -51,13 +51,15 @@ def step(PD, sock):
 
 if __name__ == '__main__':
 
-    HOST, PORT = "localhost", 9999
+    HOST, PORT = 'localhost', 9999
 
     # Create a socket (SOCK_STREAM means a TCP socket)
     sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
     try:
         sock.connect((HOST, PORT))
+        print "connected"
+        """
         sock.sendall(getParms + "\n")
 
         # Receive data from the server and shut down
@@ -69,6 +71,8 @@ if __name__ == '__main__':
             print "error on getting params"
             exit()
         [pic_width, pic_height, FOV] = json.load(received)
+        """
+
     except:
         print "Cannot connect to server"
         exit()
