@@ -32,6 +32,8 @@ def step(PD, sock):
         img = json.loads(received)[0]
     except:
         print "Error on getting image"
+        return
+
     if img is None or img.shape is None:
         return
 
