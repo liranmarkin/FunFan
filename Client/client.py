@@ -27,6 +27,7 @@ FOV = None
 def step(PD, sock):
     sock.sendall(getImg + "\n")
     received = sock.recv(1024)
+    img = None
     try:
         img = json.loads(received)[0]
     except:
