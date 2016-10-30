@@ -63,7 +63,7 @@ if __name__ == '__main__':
     try:
         sock.connect((HOST, PORT))
         print "connected"
-        """
+
         sock.sendall(getParms + "\n")
 
         # Receive data from the server and shut down
@@ -75,7 +75,6 @@ if __name__ == '__main__':
             print "error on getting params"
             exit()
         [pic_width, pic_height, FOV] = json.loads(received)
-        """
 
     except:
         print "Cannot connect to server"
