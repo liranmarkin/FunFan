@@ -27,7 +27,10 @@ FOV = None
 def step(PD, sock):
     sock.sendall(getImg + "\n")
     received = sock.recv(1024)
-    [img] = json.loads(received)
+    try:
+        img = json.loads(received)[0]
+    except:
+        print "Error on getting image"
     if img is None or img.shape is None:
         return
 
