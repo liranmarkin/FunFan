@@ -55,8 +55,11 @@ class Camera():
         self.pic_width = self.camera.get(3)
         self.pic_height = self.camera.get(4)
 
+
     def get_camera_params(self):
+        print "Camera params: " + str(self.pic_width) + " " + str(self.pic_height) + " " + str(self.FOV)
         return [self.pic_width, self.pic_height, self.FOV]
+
 
 
 
