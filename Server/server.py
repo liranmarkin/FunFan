@@ -39,6 +39,8 @@ class Camera():
 
     def take_picture(self):
         retval, im = self.camera.read()
+        if im is None or im.shape is None:
+            return
         cv2.imwrite(self.img1_url, im)
         if os.path.isfile(self.img_url):
             os.remove(self.img_url)
