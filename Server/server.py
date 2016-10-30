@@ -40,7 +40,8 @@ class Camera():
     def take_picture(self):
         retval, im = self.camera.read()
         cv2.imwrite(self.img1_url, im)
-        os.remove(self.img_url)
+        if os.path.exists(self.img1_url):
+            os.remove(self.img_url)
         os.rename(self.img1_url, self.img_url)
 
     def get_image(self):
@@ -109,7 +110,7 @@ if __name__ == "__main__":
 
     #start camera on channel 1
     camera = Camera(1)
-    thread.start_new_thread(shoot, (camera))
+    thread.start_new_thread(shoot, (camera, ))
 
     #start servo on pin 12
     servo = Servo(12)

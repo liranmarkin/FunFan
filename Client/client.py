@@ -1,6 +1,7 @@
 import socket
 import sys
 import json
+import cv2
 
 
 class PeopleDetector(object):
