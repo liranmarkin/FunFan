@@ -85,6 +85,7 @@ if __name__ == '__main__':
 
     PD = PeopleDetector()
 
+    sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     try:
         sock.connect((HOST, PORT))
         print "connected2"
