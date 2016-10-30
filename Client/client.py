@@ -1,5 +1,4 @@
 import socket
-import sys
 import json
 import cv2
 
@@ -52,7 +51,7 @@ def step(PD, sock):
 
 if __name__ == '__main__':
 
-    HOST, PORT = " //raspberrypi_ip  ", 9999
+    HOST, PORT = "localhost", 9999
 
     # Create a socket (SOCK_STREAM means a TCP socket)
     sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -63,6 +62,8 @@ if __name__ == '__main__':
 
         # Receive data from the server and shut down
         received = sock.recv(1024)
+
+        print received
 
         if received == "Error":
             print "error on getting params"
