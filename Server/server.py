@@ -54,6 +54,8 @@ class Camera():
         self.camera = cv2.VideoCapture(self.camera_port)
         self.pic_width = self.camera.get(3)
         self.pic_height = self.camera.get(4)
+        print self.camera.get(3)
+        print self.camera.get(4)
 
 
     def get_camera_params(self):
