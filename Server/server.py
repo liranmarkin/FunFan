@@ -40,7 +40,7 @@ class Camera():
     def take_picture(self):
         retval, im = self.camera.read()
         cv2.imwrite(self.img1_url, im)
-        if os.path.exists(self.img1_url):
+        if os.path.isfile(self.img1_url):
             os.remove(self.img_url)
         os.rename(self.img1_url, self.img_url)
 
