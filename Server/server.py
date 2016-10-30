@@ -29,7 +29,7 @@ class Servo():
         self.servo.ChangeDutyCycle(self.toDutyCycle(deg))
 
 class Camera():
-    camera_port = 1
+    camera_port = 0
     pic_width = None
     pic_height = None
     FOV = 75
