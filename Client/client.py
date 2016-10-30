@@ -80,9 +80,14 @@ if __name__ == '__main__':
         print "Cannot connect to server"
         exit()
 
+    finally:
+        sock.close()
+
     PD = PeopleDetector()
 
     try:
+        sock.connect((HOST, PORT))
+        print "connected2"
         while True:
             step(PD, sock)
 
