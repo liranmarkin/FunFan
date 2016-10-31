@@ -95,7 +95,6 @@ class MyTCPHandler(SocketServer.BaseRequestHandler):
         if self.data == "getImg":
             img = camera.get_image()
             data = np.array(img).tostring()
-            print data
             self.request.send(str(len(data)).ljust(16))
             print "len = " + len(data)
             self.request.send(data)  # protocol 0 is printable ASCII
