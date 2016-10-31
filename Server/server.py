@@ -50,9 +50,7 @@ class Camera():
         os.rename(self.img1_url, self.img_url)
 
     def get_image(self):
-        im = cv2.imread(self.img_url, 0)
-        print im
-        return [].append(cv2.imread(self.img_url, 0))
+        return cv2.imread(self.img_url, 0)
 
     def __init__(self, camera_port):
         self.camera_port = camera_port
