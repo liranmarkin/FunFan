@@ -4,6 +4,7 @@ import cv2
 import os
 import thread
 import json
+import pickle
 
 
 class Servo():
@@ -91,10 +92,10 @@ class MyTCPHandler(SocketServer.BaseRequestHandler):
         print "{} wrote:".format(self.client_address[0])
         print self.data
         if self.data == "getImg":
-
             img = camera.get_image()
             print img
-            self.request.sendall(json.dumps(img))
+            self.request.sendall(pickle.dumps(img, protocol=0))  # protocol 0 is printable ASCII
+            #self.request.sendall(json.dumps(img))
         elif self.data == "getParms":
             self.request.sendall(json.dumps(camera.get_camera_params()))
         else:
