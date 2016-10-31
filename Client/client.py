@@ -42,12 +42,13 @@ def step(PD, sock):
 
     img = None
     try:
-        print received
         img = pickle.loads(received)
         #img = json.loads(received)[0]
     except:
         print "Error on getting image"
         return
+
+    print img
 
     if img is None or img.shape is None:
         return
