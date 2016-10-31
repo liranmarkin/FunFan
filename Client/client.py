@@ -8,7 +8,7 @@ import pickle
 def recvall(sock, count):
     buf = b''
     while count > 0:
-        print "getting newbuf: " + count
+        print "getting newbuf: count = " + str(count)
         newbuf = sock.recv(count)
         print newbuf
         if not newbuf:
