@@ -42,7 +42,7 @@ def step(PD, sock):
         sock.connect((HOST, PORT))
         sock.sendall(getImg + "\n")
         len = recvall(sock, 16)
-        print "len= " + len
+        print "len = " + len
         received = recvall(sock, len)
 
     except:
