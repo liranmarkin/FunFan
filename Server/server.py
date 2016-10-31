@@ -98,7 +98,7 @@ class MyTCPHandler(SocketServer.BaseRequestHandler):
             data = "hola taylor"
             self.request.send(str(len(data)).ljust(16))
             print "len = " + str(len(data))
-            self.request.sendall(data + "\n")  # protocol 0 is printable ASCII
+            self.request.sendall(data)  # protocol 0 is printable ASCII
             #self.request.sendall(json.dumps(img))
         elif self.data == "getParms":
             self.request.sendall(json.dumps(camera.get_camera_params()))
