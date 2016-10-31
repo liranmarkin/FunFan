@@ -45,6 +45,7 @@ def step(PD, sock):
         len = recvall(sock, 16)
         print "len = " + len
         received = recvall(sock, len)
+        print received
 
     except:
         print "Error connecting server"
