@@ -50,7 +50,7 @@ class Camera():
         os.rename(self.img1_url, self.img_url)
 
     def get_image(self):
-        im = [].append(cv2.imread(self.img_url, 0))
+        im = cv2.imread(self.img_url, 0)
         print im
         return [].append(cv2.imread(self.img_url, 0))
 
