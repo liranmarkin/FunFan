@@ -51,7 +51,7 @@ class Camera():
         os.rename(self.img1_url, self.img_url)
 
     def get_image(self):
-        return [cv2.imread(self.img_url, 0)]
+        return cv2.imread(self.img_url, 0)
 
     def __init__(self, camera_port):
         self.camera_port = camera_port
@@ -93,8 +93,9 @@ class MyTCPHandler(SocketServer.BaseRequestHandler):
         print self.data
         if self.data == "getImg":
             img = camera.get_image()
+            img = pickle.dumps(img, protocol=0)
             print img
-            self.request.sendall(pickle.dumps(img, protocol=0))  # protocol 0 is printable ASCII
+            self.request.sendall(img)  # protocol 0 is printable ASCII
             #self.request.sendall(json.dumps(img))
         elif self.data == "getParms":
             self.request.sendall(json.dumps(camera.get_camera_params()))
