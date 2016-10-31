@@ -41,7 +41,8 @@ def step(PD, sock):
 
     img = None
     try:
-        img = json.loads(received)
+        print received
+        img = json.loads(received)[0]
     except:
         print "Error on getting image"
         return
