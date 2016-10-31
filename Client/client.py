@@ -1,6 +1,7 @@
 import socket
 import json
 import cv2
+import time
 
 
 class PeopleDetector(object):
@@ -25,8 +26,19 @@ pic_height = None
 FOV = None
 
 def step(PD, sock):
-    sock.sendall(getImg + "\n")
-    received = sock.recv(1024)
+    received = None
+    sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    try:
+        sock.connect((HOST, PORT))
+        sock.sendall(getImg + "\n")
+        received = sock.recv(1024)
+
+    except:
+        print "Error connecting server"
+
+    finally:
+        sock.close()
+
     img = None
     try:
         img = json.loads(received)[0]
@@ -87,14 +99,8 @@ if __name__ == '__main__':
 
     PD = PeopleDetector()
 
-    sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    try:
-        sock.connect((HOST, PORT))
-        print "connected2"
-        while True:
-            step(PD, sock)
 
-    finally:
-        sock.close()
-
+    while True:
+        step(PD, sock)
+        time.sleep(1)
 
