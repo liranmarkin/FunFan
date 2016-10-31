@@ -28,6 +28,9 @@ class Servo():
     def turnTo(self, deg):
         self.servo.ChangeDutyCycle(self.toDutyCycle(deg))
 
+    def cleanup(self):
+        GPIO.cleanup()
+
 class Camera():
     camera_port = None
     pic_width = None
@@ -88,7 +91,9 @@ class MyTCPHandler(SocketServer.BaseRequestHandler):
         print "{} wrote:".format(self.client_address[0])
         print self.data
         if self.data == "getImg":
-            self.request.sendall(json.dumps(camera.get_image()))
+            img = camera.get_image()
+            print img
+            self.request.sendall(json.dumps(img))
         elif self.data == "getParms":
             self.request.sendall(json.dumps(camera.get_camera_params()))
         else:
@@ -124,3 +129,6 @@ if __name__ == "__main__":
 
 
     start_server(HOST, PORT)
+
+    servo.cleanup()
+
