@@ -91,6 +91,7 @@ class MyTCPHandler(SocketServer.BaseRequestHandler):
         print "{} wrote:".format(self.client_address[0])
         print self.data
         if self.data == "getImg":
+
             img = camera.get_image()
             print img
             self.request.sendall(json.dumps(img))
