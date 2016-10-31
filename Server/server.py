@@ -97,7 +97,7 @@ class MyTCPHandler(SocketServer.BaseRequestHandler):
             data = np.array(img).tostring()
             data = "hola taylor"
             self.request.send(str(len(data)).ljust(16))
-            print "len = " + str(len(data))
+            print "len = " + str(len(data)).ljust(16)
             self.request.sendall(data)  # protocol 0 is printable ASCII
             #self.request.sendall(json.dumps(img))
         elif self.data == "getParms":
