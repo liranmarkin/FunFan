@@ -9,6 +9,7 @@ def recvall(sock, count):
     buf = b''
     while count:
         newbuf = sock.recv(count)
+        print newbuf
         if not newbuf:
             return None
         buf += newbuf
