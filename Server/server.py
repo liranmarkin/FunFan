@@ -1,5 +1,6 @@
 import SocketServer
 import RPi.GPIO as GPIO
+import numpy as np
 import cv2
 import os
 import thread
@@ -93,9 +94,10 @@ class MyTCPHandler(SocketServer.BaseRequestHandler):
         print self.data
         if self.data == "getImg":
             img = camera.get_image()
-            img = pickle.dumps(img, protocol=0)
-            print img
-            self.request.sendall(img)  # protocol 0 is printable ASCII
+            data = np.array(img).tostring()
+            print data
+            self.request.send(str(len(data)).ljust(16));
+            self.request.send(data)  # protocol 0 is printable ASCII
             #self.request.sendall(json.dumps(img))
         elif self.data == "getParms":
             self.request.sendall(json.dumps(camera.get_camera_params()))

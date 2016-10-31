@@ -5,6 +5,15 @@ import time
 import pickle
 
 
+def recvall(sock, count):
+    buf = b''
+    while count:
+        newbuf = sock.recv(count)
+        if not newbuf: return None
+        buf += newbuf
+        count -= len(newbuf)
+    return buf
+
 class PeopleDetector(object):
     def __init__(self):
         self.hog = cv2.HOGDescriptor()
@@ -32,10 +41,12 @@ def step(PD, sock):
     try:
         sock.connect((HOST, PORT))
         sock.sendall(getImg + "\n")
-        received = sock.recv(1024)
+        len = recvall(sock, 16)
+        received = recvall(sock, len)
 
     except:
         print "Error connecting server"
+        return
 
     finally:
         sock.close()
