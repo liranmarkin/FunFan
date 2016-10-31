@@ -7,6 +7,7 @@ import pickle
 
 def recvall(sock, count):
     buf = b''
+    print count
     while count:
         newbuf = sock.recv(count)
         print newbuf
