@@ -2,7 +2,7 @@ import socket
 import json
 import cv2
 import time
-import pickle
+import numpy as np
 
 class PeopleDetector(object):
     def __init__(self):
@@ -48,7 +48,7 @@ def step(PD, sock):
     received = None
     try:
         sock.sendall(getImg + "\n")
-        recive_data(sock)
+        received = recive_data(sock)
         print received
 
     except:
@@ -57,9 +57,8 @@ def step(PD, sock):
 
     img = None
     try:
-        print received
-        img = pickle.loads(received)
-        #img = json.loads(received)[0]
+        arr = np.fromstring(received)
+        img = arr
     except:
         print "Error on getting image"
         return
