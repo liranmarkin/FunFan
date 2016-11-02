@@ -122,7 +122,7 @@ class MyTCPHandler(SocketServer.BaseRequestHandler):
 def start_server(HOST, PORT):
 
     # Create the server, binding to HOST:PORT
-    server = SocketServer.TCPServer((HOST, PORT), MyTCPHandler)
+    server = SocketServer.ThreadingTCPServer((HOST, PORT), MyTCPHandler)
 
     # Activate the server; this will keep running until you
     # interrupt the program with Ctrl-C
