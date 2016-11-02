@@ -103,8 +103,9 @@ if __name__ == '__main__':
 
         sock.sendall(getParms + "\n")
 
+
         # Receive data from the server and shut down
-        received = sock.recv(1024)
+        received = recive_data(sock)
 
         print received
 
