@@ -96,7 +96,10 @@ class MyTCPHandler(SocketServer.BaseRequestHandler):
     def handle(self):
         while True:
             # self.request is the TCP socket connected to the client
-            self.data = self.request.recv(1024).strip()
+            self.data = self.request.recv(1024)
+            if not self.data:
+                break
+            self.data = self.data.strip()
             print "{} wrote:".format(self.client_address[0])
             print self.data
             if self.data == "getImg" :
