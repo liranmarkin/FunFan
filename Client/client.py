@@ -4,6 +4,10 @@ import cv2
 import time
 import pickle
 
+def recive_data(sock):
+    len = recvall(sock, 16)
+    data = recvall(sock, len)
+    return data
 
 def recvall(sock, count):
     buf = b''
@@ -41,12 +45,10 @@ FOV = None
 def step(PD, sock):
     received = None
     sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    sock.connect((HOST, PORT))
     try:
-        sock.connect((HOST, PORT))
         sock.sendall(getImg + "\n")
-        len = recvall(sock, 16)
-        print "len = " + len
-        received = recvall(sock, len)
+        recive_data(sock)
         print received
 
     except:

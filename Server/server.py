@@ -86,6 +86,10 @@ class MyTCPHandler(SocketServer.BaseRequestHandler):
     override the handle() method to implement communication to the
     client.
     """
+    def send_data(self, data):
+        lengeth = len(data)
+        self.request.send(str(lengeth).ljust(16))
+        self.request.sendall(data)
 
     def handle(self):
         # self.request is the TCP socket connected to the client
@@ -93,25 +97,23 @@ class MyTCPHandler(SocketServer.BaseRequestHandler):
         print "{} wrote:".format(self.client_address[0])
         print self.data
         if self.data == "getImg":
-            img = camera.get_image()
-            data = np.array(img).tostring()
+            #img = camera.get_image()
+            #data = np.array(img).tostring()
             data = "hola taylor"
-            self.request.send(str(len(data)).ljust(16))
-            print "len = " + str(len(data)).ljust(16)
-            self.request.sendall(data)  # protocol 0 is printable ASCII
+            self.send_data(data)
             #self.request.sendall(json.dumps(img))
         elif self.data == "getParms":
-            self.request.sendall(json.dumps(camera.get_camera_params()))
+            self.send_data(json.dumps(camera.get_camera_params()))
         else:
             try:
                 deg = float(self.data)
                 if deg < 0 or deg >= 180:
-                    self.request.sendall("Error")
+                    self.send_data("Error")
                     return
                 servo.turnTo(deg)
-                self.request.sendall("Success")
+                self.send_data("Success")
             except:
-                self.request.sendall("Error")
+                self.send_data("Error")
 
 
 def start_server(HOST, PORT):
