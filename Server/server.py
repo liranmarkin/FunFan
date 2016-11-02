@@ -1,4 +1,4 @@
-import socket
+import SocketServer
 import RPi.GPIO as GPIO
 import numpy as np
 import cv2
@@ -78,83 +78,68 @@ camera = None
 servo = None
 server = None
 
+class MyTCPHandler(SocketServer.BaseRequestHandler):
+    """
+    The request handler class for our server.
 
-
-
-class Server():
-    sock = None
-    host = None
-    port = None
-    MAX_CLIENTS = 5
-    def __init__(self, HOST, PORT):
-        self.sock = socket.socket()
-        self.host = HOST
-        self.port = PORT
-        self.sock.bind((HOST, PORT))
-        self.sock.listen(self.MAX_CLIENTS)
-
-    def loop(self):
-        while True:
-            self.conn, self.addr = self.sock.accept()
-            while self.handle(self.conn):
-                pass
-            self.conn.close()
-            print "connection closed"
-
+    It is instantiated once per connection to the server, and must
+    override the handle() method to implement communication to the
+    client.
+    """
     def send_data(self, data):
         lengeth = len(data)
         print "sending: " + str(lengeth).ljust(16)
-        self.conn.send(str(lengeth).ljust(16))
+        self.request.send(str(lengeth).ljust(16))
         print "sending: " + str(data)
-        self.conn.sendall(data)
+        self.request.sendall(data)
 
-    def handle(self, conn):
-        data = conn.recv(1024).strip()
-        print data
-        if data == "getImg":
-            # img = camera.get_image()
-            # data = np.array(img).tostring()
-            ret = "hola me"
-            self.send_data(ret)
-            return True
-            # self.request.sendall(json.dumps(img))
-        elif data == "getParms":
-            self.send_data(json.dumps(camera.get_camera_params()))
-            return True
-        else:
-            try:
-                deg = float(data)
-                if deg < 0 or deg >= 180:
+    def handle(self):
+        while True:
+            # self.request is the TCP socket connected to the client
+            self.data = self.request.recv(1024).strip()
+            print "{} wrote:".format(self.client_address[0])
+            print self.data
+            if self.data == "getImg":
+                #img = camera.get_image()
+                #data = np.array(img).tostring()
+                data = "hola"
+                self.send_data(data)
+                #self.request.sendall(json.dumps(img))
+            elif self.data == "getParms":
+                self.send_data(json.dumps(camera.get_camera_params()))
+            else:
+                try:
+                    deg = float(self.data)
+                    if deg < 0 or deg >= 180:
+                        self.send_data("Error")
+                        return
+                    servo.turnTo(deg)
+                    self.send_data("Success")
+                except:
                     self.send_data("Error")
-                    return False
-                servo.turnTo(deg)
-                self.send_data("Success")
-                return True
-            except:
-                self.send_data("Error")
-                return False
 
 
 def start_server(HOST, PORT):
 
     # Create the server, binding to HOST:PORT
-    server = Server(HOST, PORT)
+    server = SocketServer.TCPServer((HOST, PORT), MyTCPHandler)
 
     # Activate the server; this will keep running until you
     # interrupt the program with Ctrl-C
-    server.loop()
+    server.serve_forever()
 
 if __name__ == "__main__":
     HOST, PORT = "localhost", 9999
 
     #start camera on channel 1
-    camera = Camera(camera_port= -1)
+    camera = Camera(-1)
     thread.start_new_thread(shoot, (camera, ))
 
     #start servo on pin 12
-    servo = Servo(pin= 12)
+    servo = Servo(12)
 
-    try:
-        start_server(HOST, PORT)
-    except KeyboardInterrupt:
-        servo.cleanup()
+
+    start_server(HOST, PORT)
+
+    servo.cleanup()
+
