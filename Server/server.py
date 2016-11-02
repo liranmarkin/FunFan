@@ -95,17 +95,17 @@ class Server():
 
     def loop(self):
         while True:
-            conn, addr = self.sock.accept()
-            while self.handle(conn):
+            self.conn, self.addr = self.sock.accept()
+            while self.handle(self.conn):
                 pass
-            conn.close()
+            self.conn.close()
 
     def send_data(self, data):
         lengeth = len(data)
         print "sending: " + str(lengeth).ljust(16)
-        self.request.send(str(lengeth).ljust(16))
+        self.conn.send(str(lengeth).ljust(16))
         print "sending: " + str(data)
-        self.request.sendall(data)
+        self.conn.sendall(data)
 
     def handle(self, conn):
         data = conn.recv(1024)
