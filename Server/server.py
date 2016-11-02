@@ -105,8 +105,12 @@ class MyTCPHandler(SocketServer.BaseRequestHandler):
             print self.data
             if self.data == "getImg" :
                 img = camera.get_image()
-                data = np.array(img).tostring()
-                self.send_data(data)
+                encode_param = [int(cv2.IMWRITE_JPEG_QUALITY), 90]
+                result, imgencode = cv2.imencode('.jpg', img, encode_param)
+                data = np.array(imgencode)
+                stringData = data.tostring()
+
+                self.send_data(stringData)
                 #self.request.sendall(json.dumps(img))
             elif self.data == "getParms":
                 self.send_data(json.dumps(camera.get_camera_params()))

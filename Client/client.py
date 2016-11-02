@@ -44,10 +44,10 @@ def recvall(sock, count):
 
 def step(PD, sock):
     print "in step"
-    received = None
+    stringData = None
     try:
         sock.sendall(getImg + "\n")
-        received = recive_data(sock)
+        stringData = recive_data(sock)
 
     except:
         print "Error connecting server"
@@ -55,8 +55,9 @@ def step(PD, sock):
 
     img = None
     try:
-        arr = np.fromstring(received)
-        img = arr
+        data = np.fromstring(stringData, dtype='uint8')
+        img = cv2.imdecode(data, 1)
+
     except:
         print "Error on getting image"
         return
