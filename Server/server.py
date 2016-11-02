@@ -39,8 +39,8 @@ class Camera():
     pic_height = None
     FOV = 75
     camera = None
-    img_url = "./img.png"
-    img1_url = "./img1.png"
+    img_url = "./img.jpg"
+    img1_url = "./img1.jpg"
 
     def take_picture(self):
         retval, im = self.camera.read()
@@ -105,7 +105,7 @@ class MyTCPHandler(SocketServer.BaseRequestHandler):
             print self.data
             if self.data == "getImg" :
                 img = None
-                while not img or img is None:
+                while img is None:
                     img = camera.get_image()
 
                 encode_param = [int(cv2.IMWRITE_JPEG_QUALITY), 90]
