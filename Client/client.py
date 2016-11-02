@@ -63,8 +63,6 @@ def step(PD, sock):
         print "Error on getting image"
         return
 
-    print img
-
     if img is None or img.shape is None:
         return
 
