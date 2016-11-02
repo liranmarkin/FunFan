@@ -35,12 +35,10 @@ def recvall(sock, count):
     while count > 0:
         print "getting newbuf: count = " + str(count)
         newbuf = sock.recv(count)
-        print newbuf
         if not newbuf or newbuf == '':
             return None
         buf += newbuf
         count -= len(newbuf)
-    print buf
     return buf
 
 def step(PD, sock):
@@ -49,7 +47,6 @@ def step(PD, sock):
     try:
         sock.sendall(getImg + "\n")
         received = recive_data(sock)
-        print received
 
     except:
         print "Error connecting server"
