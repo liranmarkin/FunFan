@@ -108,7 +108,7 @@ class Server():
         self.conn.sendall(data)
 
     def handle(self, conn):
-        data = conn.recv(1024)
+        data = conn.recv(1024).strip()
         print data
         if data == "getImg":
             # img = camera.get_image()
