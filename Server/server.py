@@ -114,7 +114,7 @@ class MyTCPHandler(SocketServer.BaseRequestHandler):
                 stringData = data.tostring()
 
                 self.send_data(stringData)
-                #self.request.sendall(json.dumps(img))
+
             elif self.data == "getParms":
                 self.send_data(json.dumps(camera.get_camera_params()))
             else:

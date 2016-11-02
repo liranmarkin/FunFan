@@ -65,6 +65,7 @@ def step(PD, sock):
     if img is None or img.shape is None:
         return
 
+    print "Detecting"
     res = PD.get(img)
     if res is not None:
         (x, y, w, h) = res
