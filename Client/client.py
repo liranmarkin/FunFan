@@ -72,7 +72,7 @@ def step(PD, sock):
     res = PD.get(img)
     if res is not None:
         (x, y, w, h) = res
-        xpos = x +w / 2.0
+        xpos = x + w / 2.0
 
         #calculate deg by xpos
         deg = float(xpos)/pic_width*FOV + (90 - FOV/2.0)
