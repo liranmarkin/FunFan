@@ -19,6 +19,7 @@ def recvall(sock, count):
         #    return None
         buf += newbuf
         count -= len(newbuf)
+    print buf
     return buf
 
 class PeopleDetector(object):
