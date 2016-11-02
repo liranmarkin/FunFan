@@ -96,7 +96,6 @@ class MyTCPHandler(SocketServer.BaseRequestHandler):
     def handle(self):
         while True:
             # self.request is the TCP socket connected to the client
-            print "gogogog"
             self.data = self.request.recv(1024)
             if not self.data or self.data == '':
                 break
