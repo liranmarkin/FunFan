@@ -117,6 +117,7 @@ class Server():
             self.send_data(ret)
             # self.request.sendall(json.dumps(img))
         elif data == "getParms":
+            print "here1"
             self.send_data(json.dumps(camera.get_camera_params()))
         else:
             try:
