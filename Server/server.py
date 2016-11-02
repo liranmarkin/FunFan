@@ -99,6 +99,7 @@ class Server():
             while self.handle(self.conn):
                 pass
             self.conn.close()
+            print "connection closed"
 
     def send_data(self, data):
         lengeth = len(data)
