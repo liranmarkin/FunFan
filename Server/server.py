@@ -107,7 +107,7 @@ class MyTCPHandler(SocketServer.BaseRequestHandler):
                 while img is None:
                     img = camera.get_image()
 
-                encode_param = [int(cv2.IMWRITE_JPEG_QUALITY), 90]
+                encode_param = [int(cv2.IMWRITE_JPEG_QUALITY), 90 ]
                 result, imgencode = cv2.imencode('.jpg', img, encode_param)
                 data = np.array(imgencode)
                 stringData = data.tostring()
