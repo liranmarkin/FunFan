@@ -88,7 +88,9 @@ class MyTCPHandler(SocketServer.BaseRequestHandler):
     """
     def send_data(self, data):
         lengeth = len(data)
+        print "sending: " + str(lengeth).ljust(16)
         self.request.send(str(lengeth).ljust(16))
+        print "sending: " + str(data)
         self.request.sendall(data)
 
     def handle(self):
