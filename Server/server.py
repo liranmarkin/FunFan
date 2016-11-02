@@ -104,7 +104,10 @@ class MyTCPHandler(SocketServer.BaseRequestHandler):
             print "{} wrote:".format(self.client_address[0])
             print self.data
             if self.data == "getImg" :
-                img = camera.get_image()
+                img = None
+                while not img or img is None:
+                    img = camera.get_image()
+
                 encode_param = [int(cv2.IMWRITE_JPEG_QUALITY), 90]
                 result, imgencode = cv2.imencode('.jpg', img, encode_param)
                 data = np.array(imgencode)
