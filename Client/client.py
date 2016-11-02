@@ -35,9 +35,9 @@ def recvall(sock, count):
     while count > 0:
         print "getting newbuf: count = " + str(count)
         newbuf = sock.recv(count)
-        #print newbuf
-        #if not newbuf:
-        #    return None
+        print newbuf
+        if not newbuf or newbuf == '':
+            return None
         buf += newbuf
         count -= len(newbuf)
     print buf
