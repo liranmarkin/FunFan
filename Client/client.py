@@ -26,7 +26,7 @@ pic_height = None
 FOV = None
 
 def recive_data(sock):
-    len = recvall(sock, 32)
+    len = int(recvall(sock, 32))
     data = recvall(sock, len)
     return data
 
