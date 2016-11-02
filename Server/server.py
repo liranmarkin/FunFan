@@ -99,7 +99,7 @@ class MyTCPHandler(SocketServer.BaseRequestHandler):
             self.data = self.request.recv(1024).strip()
             print "{} wrote:".format(self.client_address[0])
             print self.data
-            if self.data == "getImg":
+            if self.data == "getImg" :
                 #img = camera.get_image()
                 #data = np.array(img).tostring()
                 data = "hola"
