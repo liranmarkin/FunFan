@@ -44,6 +44,7 @@ pic_height = None
 FOV = None
 
 def step(PD, sock):
+    print "in step"
     received = None
     try:
         sock.sendall(getImg + "\n")
@@ -114,6 +115,7 @@ if __name__ == '__main__':
             exit()
         [pic_width, pic_height, FOV] = json.loads(received)
 
+        print "here"
         PD = PeopleDetector()
         while True:
             step(PD, sock)
