@@ -6,9 +6,7 @@ import pickle
 
 def recive_data(sock):
     len = recvall(sock, 16)
-    print len
     data = recvall(sock, len)
-    print data
     return data
 
 def recvall(sock, count):
