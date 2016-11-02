@@ -113,11 +113,10 @@ class Server():
         if data == "getImg":
             # img = camera.get_image()
             # data = np.array(img).tostring()
-            ret = "hola taylor"
+            ret = "hola me"
             self.send_data(ret)
             # self.request.sendall(json.dumps(img))
         elif data == "getParms":
-            print "here1"
             self.send_data(json.dumps(camera.get_camera_params()))
         else:
             try:
@@ -144,11 +143,11 @@ if __name__ == "__main__":
     HOST, PORT = "localhost", 9999
 
     #start camera on channel 1
-    camera = Camera(-1)
+    camera = Camera(camera_port= -1)
     thread.start_new_thread(shoot, (camera, ))
 
     #start servo on pin 12
-    servo = Servo(12)
+    servo = Servo(pin= 12)
 
     try:
         start_server(HOST, PORT)

@@ -45,8 +45,6 @@ FOV = None
 
 def step(PD, sock):
     received = None
-    sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    sock.connect((HOST, PORT))
     try:
         sock.sendall(getImg + "\n")
         recive_data(sock)
@@ -55,9 +53,6 @@ def step(PD, sock):
     except:
         print "Error connecting server"
         return
-
-    finally:
-        sock.close()
 
     img = None
     try:
@@ -101,9 +96,13 @@ if __name__ == '__main__':
     try:
         sock.connect((HOST, PORT))
         print "connected"
+    except:
+        print "Cannot connect to server"
+        sock.close()
+        exit()
 
+    try:
         sock.sendall(getParms + "\n")
-
 
         # Receive data from the server and shut down
         received = recive_data(sock)
@@ -115,17 +114,13 @@ if __name__ == '__main__':
             exit()
         [pic_width, pic_height, FOV] = json.loads(received)
 
+        PD = PeopleDetector()
+        while True:
+            step(PD, sock)
+            time.sleep(1)
+
     except:
-        print "Cannot connect to server"
-        exit()
-
-    finally:
+        print "Problem communication with the server"
         sock.close()
-
-    PD = PeopleDetector()
-
-
-    while True:
-        step(PD, sock)
-        time.sleep(1)
+        exit()
 
