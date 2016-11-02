@@ -115,19 +115,23 @@ class Server():
             # data = np.array(img).tostring()
             ret = "hola me"
             self.send_data(ret)
+            return True
             # self.request.sendall(json.dumps(img))
         elif data == "getParms":
             self.send_data(json.dumps(camera.get_camera_params()))
+            return True
         else:
             try:
                 deg = float(data)
                 if deg < 0 or deg >= 180:
                     self.send_data("Error")
-                    return
+                    return False
                 servo.turnTo(deg)
                 self.send_data("Success")
+                return True
             except:
                 self.send_data("Error")
+                return False
 
 
 def start_server(HOST, PORT):
