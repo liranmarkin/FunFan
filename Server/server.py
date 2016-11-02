@@ -90,7 +90,7 @@ class Server():
         self.sock = socket.socket()
         self.host = HOST
         self.port = PORT
-        self.sock.bind(HOST, PORT)
+        self.sock.bind((HOST, PORT))
         self.sock.listen(self.MAX_CLIENTS)
 
     def loop(self):
