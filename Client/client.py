@@ -4,24 +4,6 @@ import cv2
 import time
 import pickle
 
-def recive_data(sock):
-    len = recvall(sock, 16)
-    data = recvall(sock, len)
-    return data
-
-def recvall(sock, count):
-    buf = b''
-    while count > 0:
-        print "getting newbuf: count = " + str(count)
-        newbuf = sock.recv(count)
-        #print newbuf
-        #if not newbuf:
-        #    return None
-        buf += newbuf
-        count -= len(newbuf)
-    print buf
-    return buf
-
 class PeopleDetector(object):
     def __init__(self):
         self.hog = cv2.HOGDescriptor()
@@ -42,6 +24,24 @@ getParms = "getParms"
 pic_width = None
 pic_height = None
 FOV = None
+
+def recive_data(sock):
+    len = recvall(sock, 32)
+    data = recvall(sock, len)
+    return data
+
+def recvall(sock, count):
+    buf = b''
+    while count > 0:
+        print "getting newbuf: count = " + str(count)
+        newbuf = sock.recv(count)
+        #print newbuf
+        #if not newbuf:
+        #    return None
+        buf += newbuf
+        count -= len(newbuf)
+    print buf
+    return buf
 
 def step(PD, sock):
     print "in step"
